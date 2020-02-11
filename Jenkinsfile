@@ -1,12 +1,4 @@
 #!groovy
-
-/*********************************************************************
-***** Description :: This template is used to setup Pipeline *****
-* *** Author :: Ravindra Mittal ( ravindra.mittal@nagarro.com) *******
-***** Date        :: 08/23/2017                                  *****
-***** Revision    :: 1.0                                       *****
-**********************************************************************/  
-
 LABEL_EXPR='master'
 JAVA_HOME='Java'
 MAVEN_PATH='maven'
@@ -19,7 +11,7 @@ ARTIFACTORY_REPO='shruti'
 def  funCodeCheckoutGit()
 { 
  echo  "\u2600 **********GIT Code Checkout Stage Begins*******"
-checkout([$class: 'GitSCM', branches: [[name: "*/"]], doGenerateSubmoduleConfigurations: false, extensions: [], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: "24b76345-71e5-4762-94a7-4abf94f6070a", url: "https://github.com/Shrutifizee/CounterWebApp.git"]]])
+checkout([$class: 'GitSCM', branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: "24b76345-71e5-4762-94a7-4abf94f6070a", url: "https://github.com/Shrutifizee/CounterWebApp.git"]]])
 } 
 
 
