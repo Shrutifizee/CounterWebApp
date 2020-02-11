@@ -50,20 +50,16 @@ pipeline
 		{
 			steps
 			{
-				rtMavenDeployer (
-                    id: 'deployer',
-                    serverId: 'artifactory',
-                    releaseRepo: 'shruti',
-                    snapshotRepo: 'shruti'
-                )
-                rtMavenRun (
-                    pom: 'pom.xml',
-                    goals: 'clean install',
-                    deployerId: 'deployer',
-                )
-                rtPublishBuildInfo (
-                    serverId: 'artifactory',
-                )
+				def server = Artifactory.server 'artifactory'
+     				def buildInfo = Artifactory.newBuildInfo()
+      				buildInfo.env.capture = true
+      				buildInfo.env.collect()
+      				def rtMaven = Artifactory.newMavenBuild()
+      				rtMaven.tool = 'maven'
+      				rtMaven.deployer releaseRepo:'shruti', snapshotRepo:'shruti', server: server
+    				rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
+    				buildInfo.retention maxBuilds: 10, maxDays: 7, deleteBuildArtifacts: true
+             			server.publishBuildInfo buildInfo
 			}
 		}
 		stage ('Docker Image')
